@@ -1,0 +1,31 @@
+clusterCredentials: []
+    #  - name: mycluster
+    #   server: https://mycluster.example.com
+    #   labels: {}
+    #   annotations: {}
+    #   config:
+    #     bearerToken: "<authentication token>"
+    #     tlsClientConfig:
+    #       insecure: false
+    #        caData: "<base64 encoded certificate>"
+    # - name: mycluster2
+    #   server: https://mycluster2.example.com
+    #   labels: {}
+    #   annotations: {}
+    #   namespaces: namespace1,namespace2
+    #   clusterResources: true
+    #   config:
+    #     bearerToken: "<authentication token>"
+    #     tlsClientConfig:
+    #       insecure: false
+    #       caData: "<base64 encoded certificate>"
+    # - name: mycluster3-project-scoped
+    #   server: https://mycluster3.example.com
+    #   labels: {}
+    #   annotations: {}
+    #   project: my-project1
+    #   config:
+    #     bearerToken: "<authentication token>"
+    #     tlsClientConfig:
+    #       insecure: false
+    #       caData: "<base64 encoded certificate>"
