@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evmos-app
+  namespace: evmos
+  labels:
+    app: evmosd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evmosd
+  template:
+    metadata:
+      labels:
+        app: evmosd
+    spec:
+      containers:
+      - name: evmosd-application
+        image: <Path-to-articat-registry>
+        imagePullPolicy: Always
+        command: ["tail"]
+        args: ["-f", "/dev/null"]
+        resources:
+          limits:
+            cpu: "1"
+            memory: "800Mi"
+          requests:
+            cpu: "0.5"
+            memory: "500Mi"
+        ports:
+        - containerPort: 80
