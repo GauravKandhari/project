@@ -1,0 +1,7 @@
+kind: ServiceExport
+apiVersion: net.gke.io/v1
+metadata:
+  name: evmosd-service
+  namespace: evmos
+  labels:
+    app: evmosd
