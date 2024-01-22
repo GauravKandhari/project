@@ -148,6 +148,53 @@ Steps to install monitoring for private GKE cluster:
 -    kubectl apply -f clusters/gke-private-cluster/manifests/
 
 
+############################################################################################################
+Configuration to expose evmosd to the internet using Kubernetes gateway controller.
+###########################################################################################################
+
+Prerequisite:
+
+- CRDs related to Gateway Controller need to be installed
+  - kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+- Enable Gateway API on your config cluster
+  - Update the terraform configuration to enable Gateway API for the cluster.
+- Enable Workload Identity
+  - Already enabled for the cluster
+- Enable following API
+  - container.googleapis.com
+  - gkeconnect.googleapis.com
+  - gkehub.googleapis.com
+  - cloudresourcemanager.googleapis.com
+- Enable the following multi-cluster Gateways required APIs in your project:
+  - trafficdirector.googleapis.com
+  - multiclusterservicediscovery.googleapis.com
+  - multiclusteringress.googleapis.com
+
+Useful Links:
+- https://cloud.google.com/kubernetes-engine/docs/how-to/enabling-multi-cluster-gateways
+- https://cloud.google.com/anthos/fleet-management/docs/before-you-begin#enable_apis
+- https://cloud.google.com/kubernetes-engine/docs/how-to/deploying-multi-cluster-gateways#external-gateway
+- https://cloud.google.com/kubernetes-engine/docs/concepts/gateway-api
+- https://gateway-api.sigs.k8s.io/
+
+Steps to install Gatway controller, TLS redirect, Routes related to application:
+
+-   Connect to the private GKE cluster created above using the below command.
+        -   kubectl config use-context <private-gke-cluster-context>  #In '~/.kube/config' file.
+        -   Create the proxy using Bastion host
+        -   gcloud compute ssh --tunnel-through-iap instance-simple-001 --zone=europe-west1-b --project=<Project-ID> --ssh-flag="-4 -L8888:localhost:8888 -N -q -f"
+        -   export HTTPS_PROXY=localhost:8888
+        -   kubectl get ns   #To check cluster connectivity
+-   cd `~/gke-gateway-controller`
+-   kubectl apply -f gateway-contoller.yaml
+-   kubectl apply -f tls-redirect-route.yaml
+-   kubectl apply -f gRPC-route.yaml
+
+Currently, as no TLS certifate secret is present in the cluster so deployment of gateway controller (LB creation and IP allotment) will not happen.
+Once certifate related configurations are present within the cluster, we can proceed with the above configurations.
+
+For certificates we could use cert-manager: https://github.com/cert-manager/cert-manager
+
 
 
 ###############################################################################################
