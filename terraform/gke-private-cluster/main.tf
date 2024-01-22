@@ -23,6 +23,7 @@ module "gke" {
   deletion_protection               = false
   grant_registry_access             = true # To pull images from registry. evmosd docker image is in the Artifact registry.
   registry_project_ids              = var.registry_project_ids
+  gateway_api_channel               = "CHANNEL_STANDARD"
 
   master_authorized_networks = [
     {
