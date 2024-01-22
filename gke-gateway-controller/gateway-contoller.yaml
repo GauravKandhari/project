@@ -1,0 +1,22 @@
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: external-grpc
+  namespace: evmos
+spec:
+  gatewayClassName: gke-l7-global-external-managed
+  listeners:
+  - name: grpc1
+    protocol: HTTP
+    port: 80
+    hostname: xyz.evmos.com
+  - name: grpc2
+    protocol: HTTPS
+    port: 443
+    hostname: xyz.evmos.com
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: xyz-evmos-certificate

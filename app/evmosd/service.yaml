@@ -4,7 +4,7 @@ metadata:
   name: evmosd-service
   namespace: evmos
   labels:
-    app: evmosds
+    app: evmosd
 spec:
   type: ClusterIP
   ports:
